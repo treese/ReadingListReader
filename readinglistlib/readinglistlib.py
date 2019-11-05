@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 import plistlib
 import datetime
@@ -95,6 +96,7 @@ class ReadingListReader:
             article['added'] = None
         return article
 
+
     def formatDates(self, article, dateformat):
         if None != article['viewed']:
             article['viewed'] = article['viewed'].strftime(dateformat)
@@ -104,5 +106,8 @@ class ReadingListReader:
             article['added'] = article['added'].strftime(dateformat)
         else:
             article['added'] = ''
-        article['date'] = article['date'].strftime(dateformat)
+        try:
+            article['date'] = article['date'].strftime(dateformat)
+        except ValueError:
+            article['date'] = None
         return article
